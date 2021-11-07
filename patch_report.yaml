@@ -19,14 +19,14 @@
         delegate_to: 127.0.0.1
 
       - name: Write headings of csv file
-        shell: echo 'Virtual Machine,OS Name,Date of Last Patch,Current Kernel' > /Users/daniel/output.csv
+        shell: echo 'Virtual Machine,OS Name,Date of Last Patch,Current Kernel' > /home/daniel/reports/output.csv
         delegate_to: 127.0.0.1
 
       - name: write lines to file
         lineinfile:
           create: yes
           line: "{{ item }}"
-          path: "/Users/daniel/output.csv"
+          path: "/home/daniel/reports/output.csv"
         with_items: "{{ lines }}"
         delegate_to: 127.0.0.1
 
@@ -38,4 +38,4 @@
 #          subject: "Patching report"
 #          body: "Hello, \nThis is the patching report from linux servers"
 #          host: smtp.dxide.com
-#          attach: "/home/ansible/patch_report/output.csv"
+#          attach: "/home/daniel/reports/output.csv"
