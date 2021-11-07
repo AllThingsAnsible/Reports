@@ -20,7 +20,7 @@
 
       - name: Write headings of csv file
         shell: echo 'Virtual Machine,OS Name,Date of Last Patch,Current Kernel' > /home/daniel/reports/output.csv
-        delegate_to: localhost
+        delegate_to: 192.168.1.24
 
       - name: write lines to file
         lineinfile:
