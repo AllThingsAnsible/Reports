@@ -19,7 +19,7 @@
 
       - name: Write headings of csv file
         shell: echo 'Virtual Machine,OS Name,Date of Last Patch,Current Kernel' > /home/daniel/reports/output.csv
-        delegate_to: 127.0.0.1
+        delegate_to: localhost
 
       - name: write lines to file
         lineinfile:
@@ -27,7 +27,7 @@
           line: "{{ item }}"
           path: "/home/daniel/reports/output.csv"
         with_items: "{{ lines }}"
-        delegate_to: 127.0.0.1
+        delegate_to: localhost
 
 #      - name: Mail reports
 #        mail:
