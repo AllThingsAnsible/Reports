@@ -1,0 +1,41 @@
+---
+  - name: Create patching report
+    hosts: node1
+    become:  yes
+    tasks:
+
+      - name: Find the release
+        shell: cat /etc/redhat-release
+        register: release
+
+      - name: Find the last patch date
+        shell: rpm -qa --queryformat '%{installtime:date}\n' | sort -n | tail -n 1 
+        register: patch_date
+        become: yes
+
+      - name: Get all of the hostnames
+        set_fact:
+          lines: "{{ ansible_hostname }},{{ release.stdout }},{{ patch_date.stdout }},{{ ansible_kernel }}"
+        delegate_to: 127.0.0.1
+
+      - name: Write headings of csv file
+        shell: echo 'Virtual Machine,OS Name,Date of Last Patch,Current Kernel' > /Users/daniel/output.csv
+        delegate_to: 127.0.0.1
+
+      - name: write lines to file
+        lineinfile:
+          create: yes
+          line: "{{ item }}"
+          path: "/Users/daniel/output.csv"
+        with_items: "{{ lines }}"
+        delegate_to: 127.0.0.1
+
+#      - name: Mail reports
+#        mail:
+#          to: "daniel.vonmoser@leoburnett.com"
+#          from: "tower@dxide.com"
+#          secure: starttls
+#          subject: "Patching report"
+#          body: "Hello, \nThis is the patching report from linux servers"
+#          host: smtp.dxide.com
+#          attach: "/home/ansible/patch_report/output.csv"
