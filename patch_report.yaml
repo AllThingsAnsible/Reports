@@ -17,17 +17,17 @@
         set_fact:
           lines: "{{ ansible_hostname }},{{ release.stdout }},{{ patch_date.stdout }},{{ ansible_kernel }}"
 
-#      - name: Write headings of csv file
-#        shell: echo 'Virtual Machine,OS Name,Date of Last Patch,Current Kernel'# > /ansible/output.csv
-#        delegate_to: localhost
+      - name: Write headings of csv file
+        shell: echo 'Virtual Machine,OS Name,Date of Last Patch,Current Kernel' > /home/daniel/output.csv
+        delegate_to: 192.168.1.24
 
       - name: write lines to file
         lineinfile:
           create: yes
           line: "{{ item }}"
-          path: "/ansible/output.csv"
+          path: "/home/daniel/output.csv"
         with_items: "{{ lines }}"
-        delegate_to: localhost
+        delegate_to: 192.168.1.24
 
 #      - name: Mail reports
 #        mail:
