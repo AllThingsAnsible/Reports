@@ -1,6 +1,6 @@
 ---
   - name: Create patching report
-    hosts: node1
+    hosts: all
     become:  yes
     tasks:
 
