@@ -16,11 +16,10 @@
       - name: Get all of the hostnames
         set_fact:
           lines: "{{ ansible_hostname }},{{ release.stdout }},{{ patch_date.stdout }},{{ ansible_kernel }}"
-        delegate_to: 127.0.0.1
 
       - name: Write headings of csv file
         shell: echo 'Virtual Machine,OS Name,Date of Last Patch,Current Kernel' > /home/daniel/reports/output.csv
-        delegate_to: 192.168.1.24
+        delegate_to: 127.0.0.1
 
       - name: write lines to file
         lineinfile:
