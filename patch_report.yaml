@@ -10,9 +10,6 @@
         register: patch_date
         become: yes
 
-      - debug:
-          msg: "{{ patch_date }}"
-
       - name: Get all of the hostnames
         set_fact:
           lines: "{{ ansible_hostname }},{{ ansible_distribution }} {{ ansible_distribution_version }},{{ item }},{{ ansible_kernel }}"
