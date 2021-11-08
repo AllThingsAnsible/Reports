@@ -15,7 +15,9 @@
 
       - name: Get all of the hostnames
         set_fact:
-          lines: "{{ ansible_hostname }},{{ ansible_distribution }} {{ ansible_distribution_version }},{{ patch_date.stdout }},{{ ansible_kernel }}"
+          lines: "{{ ansible_hostname }},{{ ansible_distribution }} {{ ansible_distribution_version }},{{ item }},{{ ansible_kernel }}"
+        with_items:
+          - "{{ patch_date.stdout_lines }}"
 
       - name: Write headings of csv file
         shell: echo 'Virtual Machine,OS Name,Date of Last Patch,Current Kernel' > /home/daniel/output.csv
