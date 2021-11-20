@@ -6,7 +6,7 @@
     tasks:
 
       - name: Find the last patch date
-        shell: rpm -qa --queryformat '%{installtime:date}\n' | tail -n 1 
+        shell: rpm -qa --queryformat '%{installtime:date}\n' | sort -n | tail -n 1 
         register: patch_date
         become: yes
 
